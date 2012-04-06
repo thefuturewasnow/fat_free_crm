@@ -9,9 +9,9 @@ class Ability
     can :create, :all
     can :manage, entities, :access => 'Public'
     if user.present?
-      can :manage, User if user.admin?
       can :manage, entities + [Task], :user_id => user.id
       can :manage, entities, :permissions.outer => {:user_id => user.id}
+      can :manage, entities, :permissions.outer => {:group_id => user.group_ids}
     end
   end
 end
